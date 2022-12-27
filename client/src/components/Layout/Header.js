@@ -1,12 +1,16 @@
 import { Fragment } from 'react';
 import classes from './Header.module.css';
-
+import {Navbar , Container} from "react-bootstrap";
 const Header = (props) => {
   return (
     <Fragment>
-      <header className={classes.header}>
-        <h1>ReactMeals</h1>
-      </header>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="#home">
+            Code Names
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
     </Fragment>
   );
 };

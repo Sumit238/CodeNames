@@ -1,7 +1,7 @@
 const teamClass=require('./Teams');
 const playerClass=require('./players');
 const wordBoardClass=require('./wordBoard');
-
+const { v4: uuidv4 } = require('uuid');
 class Game{
     constructor(){
         this.players=[];
@@ -11,6 +11,7 @@ class Game{
         this.hintCount=undefined;
         this.playingTeamIndex=undefined
         this.status='opened';
+        this.gameId=uuidv4();
     }
     start(){
         g.createWordBoard();
@@ -85,33 +86,33 @@ class Game{
         this.wordBoard.displayWords();
     }
 }
+module.exports=Game;
+// const g= new Game();
+// const PinkTeamId=g.addTeam('Pink');
+// console.log(PinkTeamId)
+// const redTeamId=g.addTeam('red');
+// console.log(redTeamId);
 
-const g= new Game();
-const PinkTeamId=g.addTeam('Pink');
-console.log(PinkTeamId)
-const redTeamId=g.addTeam('red');
-console.log(redTeamId);
+// // g.teams.forEach((team)=>{
+// //     console.log();
+// //     console.log("->"+team.name+"-"+team.teamId);
+// //     console.log("--players in Team"+team.name)
+// //     team.Players.forEach((player)=>{
+// //         console.log("---"+player.name);
+// //     })
+// //     console.log();
+// //     console.log("--wordsAssigned in Team"+team.name)
+// //     team.wordsAssigned.forEach((word)=>{
+// //         console.log("---"+word.word);
+// //     })
+// // })
 
-// g.teams.forEach((team)=>{
-//     console.log();
-//     console.log("->"+team.name+"-"+team.teamId);
-//     console.log("--players in Team"+team.name)
-//     team.Players.forEach((player)=>{
-//         console.log("---"+player.name);
-//     })
-//     console.log();
-//     console.log("--wordsAssigned in Team"+team.name)
-//     team.wordsAssigned.forEach((word)=>{
-//         console.log("---"+word.word);
-//     })
-// })
-
-//console.log("->",g.teams.length);
-const p1Id=g.addPlayer('Sumit1',PinkTeamId);
-const p2Id=g.addPlayer('Sumit2',PinkTeamId);
-const p3Id=g.addPlayer('Sumit3',redTeamId);
-const p4Id=g.addPlayer('Sumit4',redTeamId);
-g.removePlayer(p3Id,redTeamId)
-g.createWordBoard()
-g.displayGame()
+// //console.log("->",g.teams.length);
+// const p1Id=g.addPlayer('Sumit1',PinkTeamId);
+// const p2Id=g.addPlayer('Sumit2',PinkTeamId);
+// const p3Id=g.addPlayer('Sumit3',redTeamId);
+// const p4Id=g.addPlayer('Sumit4',redTeamId);
+// g.removePlayer(p3Id,redTeamId)
+// g.createWordBoard()
+// g.displayGame()
 
