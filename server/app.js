@@ -35,16 +35,46 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 
 
-app.get('newGame',(req,res)=>{
+app.get('/newGame',(req,res)=>{
     const game=new codenamesGame();
     const gameId=game.gameId;
     console.log(gameId)
-    res.send(`here is your game id : ${gameId}`);
+    res.send({gameId:gameId});
 })
 
 
 
-//app.get('/api', (req, res) => res.json({"users":["Hiii","Aman","GG","user5","Hiii","Aman","GG","user5","Hiii","Aman","GG","user5",]}))
+app.get('/getWords', (req, res) => res.json({words:[{
+    word:'cool',
+    wordId:'jdnvvljeneve',
+
+},
+{
+    word:'cool',
+    wordId:'jdnvvljeneve',
+
+},
+{
+    word:'cool',
+    wordId:'jdnvvljeneve',
+
+},
+{
+    word:'cool',
+    wordId:'jdnvvljeneve',
+
+},
+{
+    word:'cool',
+    wordId:'jdnvvljeneve',
+
+},
+{
+    word:'cool',
+    wordId:'jdnvvljeneve',
+
+}
+]}))
 server.listen(5000, () => {
     console.log('listening on *:5000');
   });

@@ -1,8 +1,24 @@
-import { Fragment } from 'react';
+import { Fragment ,useState } from 'react';
 import {Button , Container, Form ,InputGroup,Col,Row} from "react-bootstrap";
+import useHttp from '../hooks/use-http';
 const CreateJoinGame= ()=>{
+    const { isLoading, error, sendRequest } = useHttp();
+    const [gameId,setGameid] =useState('');
+    const getGameId=(data)=>{
+        console.log(data);
+        setGameid(data);
+    }
     const onClickCreateNewGame=()=>{
-        
+        sendRequest(
+            {
+              url: '/newGame',
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+            getGameId
+          );
     }
 
     return (

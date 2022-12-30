@@ -9,26 +9,15 @@ import Header from './components/Layout/Header';
 import LandingPage from './landingPage/CodeNameLanding';
 const socket = io.connect("http://localhost:5000/");
 function App() {
-  const [backendData,setbackendData]=useState([{}]);
-  
-  useEffect(()=>{
-    fetch('/api').then( response=>response.json()).then(data=>{
-      console.log(data)
-      setbackendData(data);
-    })
-  },[])
   return (
     <div className="App">
         <Header/>
-        <LandingPage/>
-        {/* <div className='playGround'>
+        {/* <LandingPage/> */}
+        <div className='playGround'>
           <TeamCard/>
           <TeamCard/>
-          
-            {!backendData.users && <p>Loading .....</p>}
-            {backendData.users &&  <WordBoard words={backendData.users}/>    
-            }
-        </div> */}
+          <WordBoard />
+        </div>
           
         
     </div>
