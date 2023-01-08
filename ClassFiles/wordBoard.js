@@ -2,7 +2,7 @@ const team=require('./Teams')
 const teamClass=require('./Teams');
 const playerClass=require('./players');
 const { v4: uuidv4 } = require('uuid');
-const getRandomWords=require('./randomwordGenrator');
+//const getRandomWords=require('./randomwordGenrator');
 class Word{
     constructor(word,team){
         this.wordId=uuidv4();
@@ -27,7 +27,7 @@ s
 */
 class wordBoard{
     constructor(wordCount=16,teams){
-        this.words=getRandomWords(wordCount);
+        this.words=[];
         let totalTeams=teams.length;
         for(let i=0;i<wordCount;i++){
             const team=teams[i%totalTeams];

@@ -12,6 +12,9 @@ const socket = io.connect("http://localhost:5000/");
 socket.on('players_state',(data)=>{
   console.log(data,"player_state")
 })
+socket.on('team_state',(data)=>{
+  console.log(data,'team_state')
+})
 function App() {
 
   socket.on("new_player", function(data) {

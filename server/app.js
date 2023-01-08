@@ -35,22 +35,22 @@ app.get('/newGame',(req,res)=>{
     const game=new codenamesGame();
     const gameId=game.gameId;
     availableGames[gameId]=game
-    console.log(gameId)
+    const t1Id=game.addTeam('blue team');
+    const t2Id=game.addTeam('red team');
     res.send({gameId:gameId});
 })
 app.post('/joinGame',async (req,res)=>{
     const playerId=req.body.playerId;
     const gameId=req.body.gameId
-    console.log(req.body)
     const playerName=req.body.playerName;
-    console.log(availableGames)
     const gameInstance=availableGames[gameId];
     const io = req.app.get('socketio');
     gameInstance.addPlayer(playerName,undefined,playerId);
     const playerState=gameInstance.getPlayerState()
     const socket =io.sockets.sockets.get(playerId)
     socket.join(gameId)
-    io.to(gameId).emit('players_state',playerState)
+    io.to(gameId).emit('players_state',gameInstance.players)
+    io.to(gameId).emit('team_state',[...gameInstance.teams]);
     res.send({gameId:gameId})
 })
 
