@@ -9,7 +9,6 @@ const WordBoard=(props)=>{
     const dispatch=useDispatch();
     const words=useSelector(state=>state.WordBoard.words);
     const initializeWordBoard=(data)=>{
-        console.log(data,"BYEEEEEEEEEEEEEEEEEEEEEEE")
         dispatch(createWordBoard_reducer({words:data.words,}))
     }
     useEffect(() => {
@@ -24,14 +23,12 @@ const WordBoard=(props)=>{
             initializeWordBoard
           );
     }, [])
-    console.log("from "+words)
     return (
         <div className={classes.board}>
             {error&&<p>{error}</p>}
             {isLoading&&<p>Loading ....</p>}
             {!isLoading && 
                     words.map((word,i)=>{
-                        console.log(word,"HIIIIIIIIIIIIIIIIi")
                         return <WordCard word={word.word} key={i}/>
                     })
             }

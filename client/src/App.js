@@ -7,20 +7,33 @@ import TeamCard from './components/Teams/Teams';
 import TeamMembers from './components/Teams/TeamMembers/TeamMembers';
 import Header from './components/Layout/Header';
 import LandingPage from './landingPage/CodeNameLanding';
+import { useDispatch ,useSelector } from 'react-redux';
 const socket = io.connect("http://localhost:5000/");
+socket.on('players_state',(data)=>{
+  console.log(data,"player_state")
+})
 function App() {
+
+  socket.on("new_player", function(data) {
+    // alert(data.id);
+    const playerId=data.id;
+    localStorage.setItem('playerId', JSON.stringify(playerId));
+  })
+  const gameId=useSelector(state=>state.Game.gameId)
+  console.log(gameId)
   return (
     <div className="App">
         <Header/>
-        {/* <LandingPage/> */}
-        <div className='playGround'>
-          <TeamCard/>
-          <TeamCard/>
-          <WordBoard />
-        </div>
-          
+        {!gameId && <LandingPage />}
         
-    </div>
+          {gameId && 
+            <div className='playGround'>
+            <TeamCard />
+            <TeamCard />
+            <WordBoard />
+          </div>
+          }
+      </div>
   );
 }
 

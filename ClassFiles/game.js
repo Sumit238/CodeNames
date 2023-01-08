@@ -36,12 +36,31 @@ class Game{
         const filteredTeams=this.teams.filter((team)=>{teamId==team.teamId});
         this.teams=filteredTeams;
     }
-    addPlayer(name,teamId){
-        let teamForPlayer=this.teams.filter((team)=>{return teamId==team.teamId})[0]; 
-        const p=new playerClass(name,teamForPlayer);
-        this.players.push(p);
+    addPlayer(name,teamId,playerId){
+        if(!teamId){
+            const p=new playerClass(name,teamId,playerId);
+            this.players.push(p);
+            return p.playerId;
+        }
+        let teamForPlayer=this.teams.filter((team)=>{return teamId==team.teamId})[0];
+        const idx =undefined;
+        for(let i=0;i<this.players.length;i++){
+            if(this.players[i].playerId==playerId){
+                idx=i;
+                break;
+            }
+        } 
+        if(!idx){
+            const p=new playerClass(name,teamForPlayer);
+            this.players.push(p);
+            teamForPlayer.addPlayer(p);
+            return p.playerId;
+        }
+        
+        const p=this.players[idx];
         teamForPlayer.addPlayer(p);
         return p.playerId;
+        
     }
     removePlayer(playerId,teamId){
         const remainingPlayers=this.players.filter((player)=>{return player.playerId!=playerId});
@@ -62,6 +81,20 @@ class Game{
         this.turn=(this.turn+1)%this.teams.length;
         this.teams[this.turn].turn=true;
 
+    }
+    getPlayerState(){
+        const playerState=[];
+        for(let i=0;i<this.players.length;i++){
+            const p=this.players[i];
+            const player={
+                playerName:p.name,
+                playerId:p.playerId,
+                teamId:p.team ? p.team.teamId : "UNDEFINED",
+                playerType:p.playerType
+            }
+            playerState.push(player)
+        }
+        return playerState;
     }
     displayGame(){
         console.log("Players Present in Game Class "+this.players.length)

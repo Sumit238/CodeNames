@@ -5,8 +5,6 @@ const methodOverride = require("method-override");
 const path = require("path");
 const expressSessions = require("express-session");
 const codenamesGame=require('../ClassFiles/game');
-// const flash = require("connect-flash");
-// const MongoStore = require('connect-mongo')
 const app = express()
 app.use(cors())
 const http = require('http');
@@ -18,15 +16,13 @@ const io = new Server(server,{
         methods:["GET","POST"]
     }
 });
+app.set('socketio', io);
 const port = 5000;
 io.on('connection', (socket) => {
     console.log('a user connected :',socket.id);
-    socket.on('join_game',(data)=>{
-        socket.join(data.gameId);
-    })
-
+    socket.emit('new_player',{id:socket.id})
 });
-
+let availableGames={}
 
 
 app.use("/static", express.static("public"));
@@ -38,8 +34,24 @@ app.use(methodOverride("_method"));
 app.get('/newGame',(req,res)=>{
     const game=new codenamesGame();
     const gameId=game.gameId;
+    availableGames[gameId]=game
     console.log(gameId)
     res.send({gameId:gameId});
+})
+app.post('/joinGame',async (req,res)=>{
+    const playerId=req.body.playerId;
+    const gameId=req.body.gameId
+    console.log(req.body)
+    const playerName=req.body.playerName;
+    console.log(availableGames)
+    const gameInstance=availableGames[gameId];
+    const io = req.app.get('socketio');
+    gameInstance.addPlayer(playerName,undefined,playerId);
+    const playerState=gameInstance.getPlayerState()
+    const socket =io.sockets.sockets.get(playerId)
+    socket.join(gameId)
+    io.to(gameId).emit('players_state',playerState)
+    res.send({gameId:gameId})
 })
 
 

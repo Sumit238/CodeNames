@@ -17,10 +17,8 @@ const WordBoardSlice=createSlice({
             if(!action.payload.words){
                 return state;
             }
-            console.log(action.payload.words);
             const words=action.payload.words;
             const newState=[];
-            console.log(words,"GHSDGDDGDD")
             words.forEach((word)=>{
                 newState.push(
                     {
@@ -42,6 +40,7 @@ const WordBoardSlice=createSlice({
                     }
                 }
             }
+            return state;
         }
 
     }
