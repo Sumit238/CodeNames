@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import WordBoardSlice from "./Slices/WordBoardSlice";
 import GameSlice from "./Slices/GameSlice";
+import TeamsSlice from "./Slices/TeamsSlice";
+import PlayersSlice from "./Slices/PlayersSlice";
 export const store= configureStore({
         reducer: {
             WordBoard:WordBoardSlice,
-            Game: GameSlice
+            Game: GameSlice,
+            Teams:TeamsSlice,
+            Players:PlayersSlice
         }
     }
 )

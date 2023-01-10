@@ -3,10 +3,10 @@ const teamClass=require('./Teams');
 const wordBoardClass=require('./wordBoard');
 const gameClass=require('./game')
 class player{
-    constructor(name,team,playerId){
+    constructor(name,teamId,playerId){
         this.name=name;
         this.playerId=playerId;
-        this.team=team;
+        this.teamId=teamId;
         this.playerType='guesser';
 
     }

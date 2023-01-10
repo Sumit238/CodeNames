@@ -6,10 +6,12 @@ const TeamsSlice =createSlice({
     },
     reducers:{
         setTeams_reducer:(state,action)=>{
-            if(!action.payload.Teams){
+            console.log('from reducer', action.payload);
+            if(!action.payload.teams){
                 return state;
             }
-            return Teams
+            
+            return action.payload.teams;
         },
     }
 })

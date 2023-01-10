@@ -46,12 +46,35 @@ app.post('/joinGame',async (req,res)=>{
     const gameInstance=availableGames[gameId];
     const io = req.app.get('socketio');
     gameInstance.addPlayer(playerName,undefined,playerId);
-    const playerState=gameInstance.getPlayerState()
     const socket =io.sockets.sockets.get(playerId)
     socket.join(gameId)
     io.to(gameId).emit('players_state',gameInstance.players)
     io.to(gameId).emit('team_state',[...gameInstance.teams]);
     res.send({gameId:gameId})
+})
+
+app.post('/joinTeam',async (req,res)=>{    
+    const playerId=req.body.playerId;
+    const gameId=req.body.gameId; 
+    const currentteamId=req.body.currentteamId;
+    const teamToJoinId=req.body.teamToJoinId;
+    const gameInstance=availableGames[gameId];
+    const io = req.app.get('socketio'); 
+    console.log("calledddddd",currentteamId)
+    if(currentteamId){
+        console.log("Helllo",currentteamId)
+        gameInstance.removePlayer(playerId,currentteamId); 
+    }
+
+    console.log(teamToJoinId);
+    gameInstance.addPlayer(undefined,teamToJoinId,playerId);
+    const socket =io.sockets.sockets.get(playerId)
+    socket.join(gameId)
+     //gameInstance.displayGame() 
+    io.to(gameId).emit('players_state',gameInstance.players)
+    io.to(gameId).emit('team_state',[...gameInstance.teams]);
+    io.to(gameId).emit('game_state',gameInstance)
+    res.send({teamId:teamToJoinId})
 })
 
 

@@ -37,21 +37,28 @@ class Game{
         this.teams=filteredTeams;
     }
     addPlayer(name,teamId,playerId){
+        console.log("inside add player")
         if(!teamId){
             const p=new playerClass(name,teamId,playerId);
             this.players.push(p);
             return p.playerId;
         }
-        let teamForPlayer=this.teams.filter((team)=>{return teamId==team.teamId})[0];
-        const idx =undefined;
+        let teamForPlayer=this.teams.filter((team)=>{return teamId===team.teamId});
+        if(teamForPlayer.length){
+            teamForPlayer=teamForPlayer[0];
+        }
+        console.log("Printing players ..............",this.players)
+        let idx =undefined;
         for(let i=0;i<this.players.length;i++){
+            console.log(playerId,this.players[i].playerId);
             if(this.players[i].playerId==playerId){
                 idx=i;
                 break;
             }
         } 
-        if(!idx){
-            const p=new playerClass(name,teamForPlayer);
+        console.log(idx);
+        if(idx===undefined){
+            const p=new playerClass(name,teamForPlayer.teamId,playerId);
             this.players.push(p);
             teamForPlayer.addPlayer(p);
             return p.playerId;
@@ -63,10 +70,14 @@ class Game{
         
     }
     removePlayer(playerId,teamId){
-        const remainingPlayers=this.players.filter((player)=>{return player.playerId!=playerId});
+        console.log("inside remove Player")
+        //const remainingPlayers=this.players.filter((player)=>{return player.playerId!=playerId});
+        this.teams.forEach((team)=>{
+            console.log(teamId,team.teamId);
+        })
         const teamForPlayer=this.teams.filter((team)=>{return teamId==team.teamId})[0];
         teamForPlayer.removePlayer(playerId);
-        this.players=remainingPlayers;
+        //this.players=remainingPlayers;
         
     }
     createWordBoard(){
@@ -116,7 +127,7 @@ class Game{
             })
             console.log()
         })
-        this.wordBoard.displayWords();
+        //this.wordBoard.displayWords();
     }
 }
 module.exports=Game;

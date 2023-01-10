@@ -3,13 +3,13 @@ import Card from "../../UI/Card"
 import Modal from "../../UI/Modal"
 import Classes from './TeamMembers.module.css'
 const TeamMembers=(props)=>{
-
+    //console.log(props.teamPlayers,"team players info la la ");
     return(
         <Modal onClose={props.onClose}>
                 <ul className={Classes.listGroup+Classes.listGroupFlush}>
-                    <li className={Classes.listGroupItem}>An item</li>
-                    <li className={Classes.listGroupItem}>A second item</li>
-                    <li className={Classes.listGroupItem}>A third item</li>
+                    {props.teamPlayers.map((player)=>{
+                        return <li>{player.name}</li>;
+                    })}
                 </ul>
         </Modal>
     )

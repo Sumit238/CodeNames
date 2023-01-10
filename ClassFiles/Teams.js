@@ -24,6 +24,7 @@ class team{
     }
     addPlayer(player){
         this.Players.push(player);
+        player.teamId=this.teamId;
     }
     removePlayer(playerId){
         const remainingPlayers=this.Players.filter((player)=>{return player.playerId!=playerId});
